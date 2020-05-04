@@ -86,7 +86,8 @@
     "webpack-dev-middleware": "^1.10.1",
     "webpack-hot-middleware": "^2.17.1",
     "webpack-sources": "^0.2.3",
-    "yargs": "^4.3.1"
+    "yargs": "^4.3.1",
+    "snyk": "^1.317.0"
   },
   "devDependencies": {
     "babel-cli": "^6.14.0",
@@ -146,7 +147,7 @@
   "scripts": {
     "postinstall": "node npm/postinstall.js",
     "transpile": "babel --ignore __tests__ --copy-files src --out-dir lib",
-    "prepublish": "rimraf lib && npm run transpile",
+    "prepublish": "yarn run snyk-protect && rimraf lib && npm run transpile",
     "#lint:js:eslint": "https://github.com/eslint/eslint/issues/5679",
     "lint:js:eslint": "eslint --ignore-path .gitignore --fix src scripts npm __tests__",
     "lint:js:flow": "flow check",
@@ -172,7 +173,8 @@
     "coverage": "cat ./coverage/lcov.info | coveralls",
     "cleanup": "rimraf yarn.lock docs/yarn.lock themes/phenomic-theme-base/yarn.lock node_modules docs/node_modules themes/phenomic-theme-base/node_modules test-setup",
     "release": "npmpub",
-    "postrelease": "npm run docs-deploy"
+    "postrelease": "npm run docs-deploy",
+    "snyk-protect": "snyk protect"
   },
   "babel": {
     "presets": [
@@ -236,5 +238,6 @@
       "/stub/",
       "/_output/"
     ]
-  }
+  },
+  "snyk": true
 }
